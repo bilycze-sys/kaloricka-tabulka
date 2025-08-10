@@ -1,0 +1,77 @@
+/* Základní styl pro celou stránku */
+body {
+    font-family: sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+}
+
+h1 {
+    color: #1a61a3;
+}
+
+/* Kontejner, ve kterém bude tabulka */
+#tabulka-kontejner {
+    margin-top: 20px;
+    overflow-x: auto; /* Přidá posuvník, pokud je tabulka širší než obrazovka */
+}
+
+/* Styl pro samotnou tabulku */
+table {
+    border-collapse: collapse; /* Spojí rámečky buněk do jedné čáry */
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Styl pro buňky tabulky (td) */
+td {
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+/* Styl pro input políčka uvnitř tabulky */
+input {
+    width: 60px; /* Šířka políčka */
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 16px;
+}
+
+/* Zvýraznění políčka, když do něj klikneme */
+input:focus {
+    outline: 2px solid #1a61a3;
+}
+
+/* Kontejner pro tlačítka */
+.tlacitka {
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Styl pro tlačítko */
+#ulozit-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer; /* Změní kurzor na ručičku */
+    font-size: 16px;
+}
+
+/* Změna barvy tlačítka při najetí myší */
+#ulozit-btn:hover {
+    background-color: #218838;
+}
+
+/* Styl pro stavovou zprávu (např. "Uloženo!") */
+#status-zprava {
+    margin-top: 10px;
+    font-style: italic;
+    color: #555;
+}
