@@ -51,16 +51,19 @@ textarea {
     text-align: left;
 }
 
-/* === ZDE JE TA DŮLEŽITÁ OPRAVA === */
-.poznamka-input {
+/* === NOVÝ STYL PRO MĚSÍČNÍ POZNÁMKU === */
+.mesicni-poznamka-input {
     width: 100%;
     box-sizing: border-box;
     text-align: center;
     font-weight: bold;
-    font-size: 18px;
-    background-color: #fffde7; /* Světle žluté pozadí pro poznámku */
-    border: 1px solid #fbc02d; /* Žlutý rámeček */
-    color: #333;
+    font-size: 20px; /* Větší písmo */
+    background-color: #e1f5fe; /* Světle modré pozadí */
+    border: 1px solid #0288d1; /* Tmavší modrý rámeček */
+    color: #01579b;
+    padding: 10px;
+    margin-top: 5px; /* Malá mezera nad poznámkou */
+    margin-bottom: 15px; /* Větší mezera pod poznámkou */
 }
 
 .soucet-bunka {
