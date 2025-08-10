@@ -104,3 +104,8 @@ button {
 #pridat-zaznam {
     background-color: #4CAF50; /* Zelená */
 }
+
+/* === NOVÝ STYL PRO MAZACÍ TLAČÍTKO === */
+#vymazat-zaznam {
+    background-color: #f44336; /* Červená */
+}

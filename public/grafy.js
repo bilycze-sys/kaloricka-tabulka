@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let vsechnaData = [];
     let aktualniIndex = 0;
     const vyberMesiceEl = document.getElementById('vyber-mesice');
-    const vyberDatumEl = document.getElementById('vyber-datum'); // Nový element pro datum
+    const vyberDatumEl = document.getElementById('vyber-datum');
 
     const definiceGrafu = {
         telo: { id: 'graf-telo', ovladaceId: 'ovladace-telo', labels: ['Váha', 'Míry', 'Body Fat %', 'Síla'] },
@@ -17,29 +17,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const aktualniZaznam = vsechnaData[aktualniIndex];
         const predchoziZaznam = aktualniIndex > 0 ? vsechnaData[aktualniIndex - 1] : null;
 
-        // === ZMĚNA: Naplnění políčka s datem ===
-        vyberDatumEl.value = aktualniZaznam.datum;
-
         for (const [nazev, definice] of Object.entries(definiceGrafu)) {
             const aktualniHodnoty = Object.values(aktualniZaznam[nazev]);
             const datasets = [{
-                label: `Aktuální (${aktualniZaznam.datum})`,
+                label: `Záznam (${aktualniZaznam.datum})`,
                 data: aktualniHodnoty,
-                fill: true,
-                backgroundColor: 'rgba(54, 162, 235, 0.3)',
-                borderColor: 'rgb(54, 162, 235)',
-                pointBackgroundColor: 'rgb(54, 162, 235)',
+                fill: true, backgroundColor: 'rgba(54, 162, 235, 0.3)', borderColor: 'rgb(54, 162, 235)',
             }];
 
             if (predchoziZaznam) {
-                const predchoziHodnoty = Object.values(predchoziZaznam[nazev]);
                 datasets.push({
                     label: `Předchozí (${predchoziZaznam.datum})`,
-                    data: predchoziHodnoty,
-                    fill: true,
-                    backgroundColor: 'rgba(201, 203, 207, 0.3)',
-                    borderColor: 'rgb(201, 203, 207)',
-                    pointBackgroundColor: 'rgb(201, 203, 207)',
+                    data: Object.values(predchoziZaznam[nazev]),
+                    fill: true, backgroundColor: 'rgba(201, 203, 207, 0.3)', borderColor: 'rgb(201, 203, 207)',
                 });
             }
 
@@ -54,8 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const vyplnOvladace = (nazev, data) => {
-        const { ovladaceId } = definiceGrafu[nazev];
-        const kontejner = document.getElementById(ovladaceId);
+        const kontejner = document.getElementById(definiceGrafu[nazev].ovladaceId);
         kontejner.innerHTML = '';
         for (const [label, hodnota] of Object.entries(data)) {
             const div = document.createElement('div');
@@ -67,8 +56,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const naplnDropdown = () => {
+        const vybranaHodnota = vyberMesiceEl.value;
         vyberMesiceEl.innerHTML = '';
-        // Seřadíme data od nejnovějšího po nejstarší pro lepší přehlednost v menu
         vsechnaData.sort((a, b) => new Date(b.datum) - new Date(a.datum));
         vsechnaData.forEach((zaznam, index) => {
             const option = document.createElement('option');
@@ -76,8 +65,22 @@ document.addEventListener('DOMContentLoaded', () => {
             option.textContent = zaznam.datum;
             vyberMesiceEl.appendChild(option);
         });
-        // Po seřazení bude nejnovější vždy na indexu 0
-        vyberMesiceEl.value = aktualniIndex;
+        vyberMesiceEl.value = vybranaHodnota || 0;
+        aktualniIndex = Number(vyberMesiceEl.value);
+    };
+
+    const ulozVsechnaData = async (dataKUlozeni, zprava) => {
+        try {
+            await fetch('/api/grafy-data', {
+                method: 'POST', headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(dataKUlozeni)
+            });
+            alert(zprava);
+            nactiData();
+        } catch (error) {
+            console.error("Chyba při ukládání:", error);
+            alert('Chyba při ukládání!');
+        }
     };
     
     const nactiData = async () => {
@@ -85,56 +88,55 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch('/api/grafy-data');
             vsechnaData = await response.json();
             if (vsechnaData.length === 0) {
-                pridejNovyZaznam(true);
+                // Pokud nemáme data, nic nedělej, čekej na akci uživatele
             } else {
-                aktualniIndex = 0; // Začneme na nejnovějším záznamu
+                aktualniIndex = 0;
                 naplnDropdown();
                 vykresliVse();
             }
-        } catch (error) {
-            console.error("Chyba při načítání dat:", error);
-        }
+        } catch (error) { console.error("Chyba při načítání dat:", error); }
     };
+    
+    // === NOVÁ, VYLEPŠENÁ FUNKCE PRO PŘIDÁNÍ ZÁZNAMU ===
+    function pridejNovyZaznam() {
+        const zvoleneDatum = vyberDatumEl.value;
+        if (!zvoleneDatum) {
+            alert("Prosím, vyberte datum pro nový záznam.");
+            return;
+        }
 
-    const ulozData = async () => {
-        // === ZMĚNA: Načteme i hodnotu z políčka pro datum ===
-        vsechnaData[aktualniIndex].datum = vyberDatumEl.value;
+        const posledniZaznam = vsechnaData.length > 0 ? vsechnaData[0] : definiceGrafu;
+        const novyZaznam = JSON.parse(JSON.stringify(posledniZaznam));
+        novyZaznam.datum = zvoleneDatum;
+        
+        vsechnaData.push(novyZaznam);
+        ulozVsechnaData(vsechnaData, `Nový záznam pro datum ${zvoleneDatum} byl přidán.`);
+    }
 
+    // === NOVÁ, VYLEPŠENÁ FUNKCE PRO ULOŽENÍ ZMĚN ===
+    function ulozAktualniZaznam() {
+        if(vsechnaData.length === 0) return alert("Není co ukládat. Přidejte první záznam.");
+        
         for (const [nazev, definice] of Object.entries(definiceGrafu)) {
             for (const label of Object.keys(vsechnaData[aktualniIndex][nazev])) {
                 const inputEl = document.getElementById(`${nazev}-${label}`);
                 vsechnaData[aktualniIndex][nazev][label] = Number(inputEl.value);
             }
         }
-        
-        try {
-            await fetch('/api/grafy-data', {
-                method: 'POST', headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(vsechnaData)
-            });
-            alert('Data uložena!');
-            // Znovu naplníme dropdown, aby se aktualizovalo datum, pokud bylo změněno
-            naplnDropdown();
-            vykresliVse();
-        } catch (error) {
-            console.error("Chyba při ukládání:", error);
-            alert('Chyba při ukládání!');
-        }
-    };
+        ulozVsechnaData(vsechnaData, `Změny pro záznam ${vsechnaData[aktualniIndex].datum} byly uloženy.`);
+    }
 
-    function pridejNovyZaznam(jenVytvorit = false) {
-        const posledniZaznam = vsechnaData.length > 0 ? vsechnaData[0] : JSON.parse(JSON.stringify(definiceGrafu));
-        const novyZaznam = JSON.parse(JSON.stringify(posledniZaznam));
-        novyZaznam.datum = new Date().toISOString().split('T')[0];
-        
-        vsechnaData.push(novyZaznam);
-        aktualniIndex = vsechnaData.length - 1; // Nový záznam je dočasně poslední
-        naplnDropdown(); // Seřadí data a nastaví index na 0 (nový záznam)
-        aktualniIndex = 0; // Ujistíme se, že jsme na novém záznamu
-        vyberMesiceEl.value = aktualniIndex;
-        vykresliVse();
-        
-        if (!jenVytvorit) ulozData();
+    // === ÚPLNĚ NOVÁ FUNKCE PRO MAZÁNÍ ===
+    function vymazAktualniZaznam() {
+        if(vsechnaData.length === 0) return alert("Není co mazat.");
+
+        const zaznamK_smazani = vsechnaData[aktualniIndex];
+        const potvrzeni = confirm(`Opravdu si přejete trvale smazat záznam pro datum ${zaznamK_smazani.datum}?`);
+
+        if (potvrzeni) {
+            vsechnaData.splice(aktualniIndex, 1);
+            ulozVsechnaData(vsechnaData, `Záznam ${zaznamK_smazani.datum} byl smazán.`);
+        }
     }
 
     vyberMesiceEl.addEventListener('change', (e) => {
@@ -142,8 +144,9 @@ document.addEventListener('DOMContentLoaded', () => {
         vykresliVse();
     });
 
-    document.getElementById('ulozit-grafy').addEventListener('click', ulozData);
-    document.getElementById('pridat-zaznam').addEventListener('click', () => pridejNovyZaznam());
+    document.getElementById('ulozit-grafy').addEventListener('click', ulozAktualniZaznam);
+    document.getElementById('pridat-zaznam').addEventListener('click', pridejNovyZaznam);
+    document.getElementById('vymazat-zaznam').addEventListener('click', vymazAktualniZaznam);
 
     nactiData();
 });
