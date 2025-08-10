@@ -105,7 +105,17 @@ button {
     background-color: #4CAF50; /* Zelená */
 }
 
-/* === NOVÝ STYL PRO MAZACÍ TLAČÍTKO === */
 #vymazat-zaznam {
     background-color: #f44336; /* Červená */
 }
+
+/* === ZDE JE NOVÝ STYL PRO ZVÝRAZNĚNÍ V KALENDÁŘI === */
+.flatpickr-day.zaznam-existuje {
+    background: #e3f2fd; /* Světle modrá */
+    border-color: #2196F3; /* Tmavší modrá */
+    color: #0d47a1;
+    font-weight: bold;
+}```
+
+---
+

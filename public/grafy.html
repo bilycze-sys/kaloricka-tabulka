@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Radarové Grafy</title>
     <link rel="stylesheet" href="style.css">
+    
+    <!-- === PŘIDÁNÍ KNIHOVNY FLATPICKR (VZHLED) === -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .main-container { max-width: 1200px; margin: auto; padding: 20px; }
@@ -25,10 +29,11 @@
         <div class="ovladani-panel">
             <a href="index.html"><button id="zpet-na-kalorie">Zpět na Kalorie</button></a>
             
+            <!-- ZMĚNA: Používáme textové pole, které vylepší flatpickr -->
             <label for="vyber-datum">Datum pro nový záznam:</label>
-            <input type="date" id="vyber-datum">
-            <button id="pridat-zaznam">Přidat Nový</button>
+            <input type="text" id="vyber-datum" placeholder="Vyber datum...">
 
+            <button id="pridat-zaznam">Přidat Nový</button>
             <button id="ulozit-grafy">Uložit Poslední</button>
             <button id="vymazat-zaznam">Vymazat Poslední</button>
         </div>
@@ -39,6 +44,9 @@
             <div class="graf-kontejner"><h2>AJ KOMUNIKACE</h2><canvas id="graf-jazyk"></canvas><div class="ovladaci-prvky" id="ovladace-jazyk"></div></div>
         </div>
     </div>
+    
+    <!-- === PŘIDÁNÍ KNIHOVNY FLATPICKR (FUNKCE) === -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="grafy.js"></script>
 </body>
 </html>
