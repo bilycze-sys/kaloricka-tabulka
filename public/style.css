@@ -109,13 +109,29 @@ button {
     background-color: #f44336; /* Červená */
 }
 
-/* === ZDE JE NOVÝ STYL PRO ZVÝRAZNĚNÍ V KALENDÁŘI === */
 .flatpickr-day.zaznam-existuje {
-    background: #e3f2fd; /* Světle modrá */
-    border-color: #2196F3; /* Tmavší modrá */
+    background: #e3f2fd;
+    border-color: #2196F3;
     color: #0d47a1;
     font-weight: bold;
-}```
+}
 
----
+/* === RESPONZIVNÍ DESIGN PRO MOBILNÍ ZAŘÍZENÍ === */
+.tabulka-kontejner {
+    overflow-x: auto; /* Umožní horizontální posouvání, pokud se tabulka nevejde */
+}
 
+@media (max-width: 800px) {
+    body {
+        padding: 10px;
+    }
+    
+    button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    a {
+        width: 100%;
+    }
+}

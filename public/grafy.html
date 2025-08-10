@@ -11,52 +11,45 @@
         .main-container { max-width: 1200px; margin: auto; padding: 20px; }
         .graf-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 40px; }
         .graf-kontejner { padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        
-        /* === ZDE JE TA DŮLEŽITÁ OPRAVA === */
         .ovladani-panel {
-            display: flex;
-            justify-content: center; /* Všechny prvky budou vycentrovány jako skupina */
-            align-items: center;    /* Všechny prvky budou vertikálně zarovnány na střed */
-            flex-wrap: nowrap;      /* Zabrání zalamování na více řádků */
-            gap: 15px;              /* Mezera mezi jednotlivými prvky */
-            padding: 15px;
-            background: #fff;
-            border-radius: 8px;
+            display: flex; justify-content: center; align-items: center;
+            flex-wrap: nowrap; /* Výchozí stav pro PC */
+            gap: 15px; padding: 15px; background: #fff; border-radius: 8px;
         }
-        
-        /* Dáme kalendáři pevnou šířku, aby se neroztahoval */
-        #vyber-datum {
-            width: 160px;
-        }
-
+        #vyber-datum { width: 160px; }
         .ovladaci-prvky { margin-top: 20px; display: grid; grid-template-columns: 1fr; gap: 10px; }
         .ovladaci-prvek { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid #eee; }
         .ovladaci-prvek label { font-weight: bold; color: #555; }
         .ovladaci-prvek input { width: 70px; text-align: right; border: 1px solid #ccc; border-radius: 4px; padding: 5px; }
+
+        /* === STYLY PRO MOBILNÍ ZAŘÍZENÍ === */
+        @media (max-width: 800px) {
+            .graf-grid {
+                grid-template-columns: 1fr; /* Grafy se poskládají pod sebe */
+            }
+            .ovladani-panel {
+                flex-wrap: wrap; /* Ovládací prvky se mohou zalomit na více řádků */
+            }
+        }
     </style>
 </head>
 <body>
     <div class="main-container">
         <h1>Osobní Rozvoj - Přehled</h1>
-
         <div class="ovladani-panel">
             <a href="index.html"><button id="zpet-na-kalorie">Zpět na Kalorie</button></a>
-            
             <label for="vyber-datum">Datum pro nový záznam:</label>
             <input type="text" id="vyber-datum" placeholder="Vyber datum...">
-
             <button id="pridat-zaznam">Přidat Nový</button>
             <button id="ulozit-grafy">Uložit Poslední</button>
             <button id="vymazat-zaznam">Vymazat Poslední</button>
         </div>
-
         <div class="graf-grid">
             <div class="graf-kontejner"><h2>TĚLO</h2><canvas id="graf-telo"></canvas><div class="ovladaci-prvky" id="ovladace-telo"></div></div>
             <div class="graf-kontejner"><h2>PŘÍJEM / PRÁCE</h2><canvas id="graf-prace"></canvas><div class="ovladaci-prvky" id="ovladace-prace"></div></div>
             <div class="graf-kontejner"><h2>AJ KOMUNIKACE</h2><canvas id="graf-jazyk"></canvas><div class="ovladaci-prvky" id="ovladace-jazyk"></div></div>
         </div>
     </div>
-    
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="grafy.js"></script>
 </body>

@@ -7,33 +7,38 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Kalorická Tabulka</h1>
 
-<table id="kaloricka-tabulka">
-    <thead>
-        <!-- TOTO JE HLAVIČKA TABULKY -->
-        <tr>
-            <th>Pondělí</th>
-            <th>Úterý</th>
-            <th>Středa</th>
-            <th>Čtvrtek</th>
-            <th>Pátek</th>
-            <th>Sobota</th>
-            <th>Neděle</th>
-            <th>Pocit</th>
-            <th>Vážení</th>
-            <th>Týdenní Kcal</th>
-        </tr>
-    </thead>
-    <tbody id="kaloricka-tabulka-body">
-        <!-- Sem bude JavaScript generovat řádky -->
-    </tbody>
-</table>
+    <h1>Kalorická Tabulka</h1>
 
-<div style="text-align: center; margin-bottom: 20px;">
-    <button id="pridat-radek">Přidat týden</button>
-    <button id="ulozit-data">Uložit data</button>
-    <a href="grafy.html"><button id="zobrazit-grafy">Zobrazit Grafy</button></a>
-</div>
+    <!-- === TOTO JE NOVÝ OBAL PRO TABULKU === -->
+    <div class="tabulka-kontejner">
+        <table id="kaloricka-tabulka">
+            <thead>
+                <tr>
+                    <th>Pondělí</th>
+                    <th>Úterý</th>
+                    <th>Středa</th>
+                    <th>Čtvrtek</th>
+                    <th>Pátek</th>
+                    <th>Sobota</th>
+                    <th>Neděle</th>
+                    <th>Pocit</th>
+                    <th>Vážení</th>
+                    <th>Týdenní Kcal</th>
+                </tr>
+            </thead>
+            <tbody id="kaloricka-tabulka-body">
+                <!-- Sem bude JavaScript generovat řádky -->
+            </tbody>
+        </table>
+    </div>
+    
+    <div style="text-align: center; margin-bottom: 20px;">
+        <button id="pridat-radek">Přidat týden</button>
+        <button id="ulozit-data">Uložit data</button>
+        <a href="grafy.html"><button id="zobrazit-grafy">Zobrazit Grafy</button></a>
+    </div>
 
-<script src="script.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
