@@ -1,108 +1,145 @@
-// Najdeme si klíčové HTML elementy, se kterými budeme pracovat
-const kontejner = document.getElementById('tabulka-kontejner');
-const ulozitBtn = document.getElementById('ulozit-btn');
-const statusZprava = document.getElementById('status-zprava');
+document.addEventListener('DOMContentLoaded', () => {
+    const tabulkaBody = document.getElementById('kaloricka-tabulka-body');
+    const pridatRadekBtn = document.getElementById('pridat-radek');
+    const ulozitDataBtn = document.getElementById('ulozit-data');
 
-// Funkce, která vytvoří tabulku z dat
-function vytvorTabulku(data) {
-    // Vytvoříme HTML element <table>
-    const table = document.createElement('table');
+    // --- POMOCNÉ FUNKCE ---
 
-    // Projdeme všechny řádky v datech (máme jich 7)
-    data.forEach((radekDat, indexRadku) => {
-        // Pro každý řádek vytvoříme HTML element <tr> (table row)
+    // NOVÁ FUNKCE: Automaticky spočítá a zobrazí součet kalorií pro daný řádek
+    const aktualizujSoucet = (radek) => {
+        const inputyKalorii = radek.querySelectorAll('input[type="number"]');
+        let soucet = 0;
+        inputyKalorii.forEach(input => {
+            soucet += parseInt(input.value) || 0;
+        });
+        // Poslední buňka v řádku je pro součet
+        radek.lastElementChild.textContent = soucet;
+    };
+
+    // --- HLAVNÍ FUNKCE ---
+
+    // Přepracovaná funkce pro vytvoření řádku
+    const vytvorRadek = (dataTydne = {}) => {
+        // 1. HLAVNÍ ŘÁDEK S DATY
         const tr = document.createElement('tr');
+        tr.classList.add('tyden-radek');
 
-        // Projdeme všechny sloupce v řádku (máme jich 15)
-        radekDat.forEach((hodnota, indexSloupce) => {
-            // Vytvoříme buňku <td> (table data)
+        // Vytvoření 7 polí pro kalorie
+        for (let i = 0; i < 7; i++) {
             const td = document.createElement('td');
-            // Vytvoříme input políčko
             const input = document.createElement('input');
-            input.type = 'number'; // Chceme zadávat jen čísla
-            input.value = hodnota; // Nastavíme mu hodnotu z dat
-            // Přidáme inputu unikátní ID pro snadnou identifikaci
-            input.id = `bunka-${indexRadku}-${indexSloupce}`;
-
-            // Vložíme input do buňky a buňku do řádku
+            input.type = 'number';
+            input.value = dataTydne.kalorie?.[i] || '';
+            // Při každé změně v políčku zavoláme přepočítání součtu
+            input.addEventListener('input', () => aktualizujSoucet(tr));
             td.appendChild(input);
             tr.appendChild(td);
-        });
-
-        // Vložíme hotový řádek do tabulky
-        table.appendChild(tr);
-    });
-
-    // Vyčistíme kontejner a vložíme do něj celou novou tabulku
-    kontejner.innerHTML = '';
-    kontejner.appendChild(table);
-}
-
-// Funkce, která sebere data z tabulky na stránce
-function seberDataZTabulky() {
-    const novaData = [];
-    // Projdeme 7 řádků
-    for (let i = 0; i < 7; i++) {
-        const radek = [];
-        // Projdeme 15 sloupců
-        for (let j = 0; j < 15; j++) {
-            // Najdeme správné políčko podle jeho ID
-            const input = document.getElementById(`bunka-${i}-${j}`);
-            // Přečteme jeho hodnotu, převedeme ji na číslo a přidáme do řádku
-            // Pokud je políčko prázdné, uložíme 0
-            radek.push(parseInt(input.value) || 0);
-        }
-        novaData.push(radek);
-    }
-    return novaData;
-}
-
-// --- HLAVNÍ LOGIKA ---
-
-// 1. Načtení dat při startu stránky
-async function nactiData() {
-    try {
-        // Pošleme dotaz na náš server na adresu /api/data
-        const response = await fetch('/api/data');
-        const data = await response.json(); // Převedeme odpověď na JSON
-        vytvorTabulku(data); // Z dat postavíme tabulku
-    } catch (error) {
-        console.error('Chyba při načítání dat:', error);
-        statusZprava.textContent = 'Nepodařilo se načíst data ze serveru.';
-    }
-}
-
-// 2. Uložení dat po kliknutí na tlačítko
-ulozitBtn.addEventListener('click', async () => {
-    try {
-        const dataKUlozeni = seberDataZTabulky();
-        statusZprava.textContent = 'Ukládám...'; // Dáme uživateli vědět, že se něco děje
-
-        // Pošleme data na náš server metodou POST
-        const response = await fetch('/api/data', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json', // Říkáme, že posíláme JSON
-            },
-            body: JSON.stringify(dataKUlozeni), // Převedeme naše data na textový řetězec JSON
-        });
-
-        if (response.ok) {
-            statusZprava.textContent = 'Úspěšně uloženo!';
-        } else {
-            statusZprava.textContent = 'Chyba při ukládání.';
         }
 
-        // Necháme zprávu zmizet po 3 sekundách
-        setTimeout(() => {
-            statusZprava.textContent = '';
-        }, 3000);
+        // Buňka pro "Pocit"
+        const tdPocit = document.createElement('td');
+        const inputPocit = document.createElement('input');
+        inputPocit.type = 'text';
+        inputPocit.value = dataTydne.pocit || '';
+        tdPocit.appendChild(inputPocit);
+        tr.appendChild(tdPocit);
 
-    } catch (error) {
-        console.error('Chyba při ukládání dat:', error);
-        statusZprava.textContent = 'Chyba při komunikaci se serverem.';
-    }
+        // Buňka pro "Vážení"
+        const tdVazeni = document.createElement('td');
+        const textareaVazeni = document.createElement('textarea');
+        textareaVazeni.rows = 3;
+        textareaVazeni.value = dataTydne.vazeni || '';
+        tdVazeni.appendChild(textareaVazeni);
+        tr.appendChild(tdVazeni);
+        
+        // Buňka pro součet kalorií
+        const tdSoucet = document.createElement('td');
+        tdSoucet.className = 'soucet-bunka'; // Dáme jí třídu pro případné stylování
+        tr.appendChild(tdSoucet);
+
+        tabulkaBody.appendChild(tr);
+
+        // 2. ŘÁDEK PRO POZNÁMKU
+        const trPoznamka = document.createElement('tr');
+        const tdPoznamka = document.createElement('td');
+        tdPoznamka.colSpan = 10; // Roztáhne se přes všechny sloupce
+        
+        const inputPoznamka = document.createElement('input');
+        inputPoznamka.type = 'text';
+        inputPoznamka.placeholder = 'Týdenní poznámka (např. nemocnice, dovolená)...';
+        inputPoznamka.value = dataTydne.tydenniPoznamka || '';
+        inputPoznamka.className = 'poznamka-input';
+        tdPoznamka.appendChild(inputPoznamka);
+        trPoznamka.appendChild(tdPoznamka);
+        tabulkaBody.appendChild(trPoznamka);
+
+        // Po vytvoření řádku rovnou spočítáme součet pro načtená data
+        aktualizujSoucet(tr);
+    };
+
+    // Upravená funkce pro načtení dat
+    const nactiData = async () => {
+        try {
+            const response = await fetch('/api/data');
+            const data = await response.json();
+            tabulkaBody.innerHTML = ''; // Vyčistit tabulku
+            
+            if (data.length > 0) {
+                data.forEach(tyden => vytvorRadek(tyden));
+            } else {
+                // OPRAVA: Pokud nejsou žádná data, vytvoř jeden prázdný řádek
+                vytvorRadek();
+            }
+        } catch (error) {
+            console.error('Chyba při načítání dat:', error);
+            // Pokud selže načítání, také vytvoř jeden prázdný řádek
+            vytvorRadek();
+        }
+    };
+
+    // Přepracovaná funkce pro uložení dat
+    const ulozData = async () => {
+        const radky = tabulkaBody.querySelectorAll('.tyden-radek');
+        const dataKUlozeni = [];
+
+        radky.forEach(radek => {
+            const dataTydne = { kalorie: [] };
+            const inputy = radek.querySelectorAll('input, textarea');
+
+            for (let i = 0; i < 7; i++) {
+                dataTydne.kalorie.push(parseInt(inputy[i].value) || 0);
+            }
+            
+            dataTydne.pocit = inputy[7].value.trim();
+            dataTydne.vazeni = inputy[8].value.trim();
+
+            // Najdeme poznámku, která je v následujícím `<tr>`
+            const poznamkaRadek = radek.nextElementSibling;
+            if (poznamkaRadek) {
+                const poznamkaInput = poznamkaRadek.querySelector('.poznamka-input');
+                dataTydne.tydenniPoznamka = poznamkaInput.value.trim();
+            }
+            dataKUlozeni.push(dataTydne);
+        });
+
+        try {
+            const response = await fetch('/api/data', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dataKUlozeni),
+            });
+            if (!response.ok) throw new Error('Chyba na straně serveru');
+            alert('Data úspěšně uložena!');
+        } catch (error) {
+            console.error('Chyba při ukládání dat:', error);
+            alert('Nastala chyba při ukládání.');
+        }
+    };
+
+    // Přiřazení funkcí tlačítkům
+    pridatRadekBtn.addEventListener('click', () => vytvorRadek());
+    ulozitDataBtn.addEventListener('click', ulozData);
+
+    // Prvotní načtení dat
+    nactiData();
 });
-
-// Vše odstartujeme tím, že zavoláme funkci pro načtení dat
-nactiData();
