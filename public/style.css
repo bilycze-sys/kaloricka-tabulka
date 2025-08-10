@@ -18,21 +18,20 @@ table {
 
 th, td {
     border: 1px solid #ddd;
-    padding: 4px; /* Menší padding pro kompaktnost */
+    padding: 4px;
     text-align: center;
 }
 
 th {
-    background-color: #4CAF50; /* Zelená hlavička */
+    background-color: #4CAF50;
     color: white;
     padding: 12px 4px;
 }
 
-/* Základní styl pro všechna pole */
 input[type="number"], input[type="text"], textarea {
     width: 100%;
     box-sizing: border-box;
-    border: 1px solid transparent; /* Neviditelný rámeček */
+    border: 1px solid transparent;
     padding: 8px;
     text-align: center;
     background-color: transparent;
@@ -40,30 +39,28 @@ input[type="number"], input[type="text"], textarea {
     transition: background-color 0.2s;
 }
 
-/* Zvýraznění pole, do kterého se píše */
 input:focus, textarea:focus {
     outline: none;
-    background-color: #e8f0fe; /* Světle modrá při psaní */
+    background-color: #e8f0fe;
 }
 
 textarea {
-    resize: vertical; /* Umožní měnit výšku pole Vážení */
+    resize: vertical;
     text-align: left;
 }
 
-/* === NOVÝ STYL PRO MĚSÍČNÍ POZNÁMKU === */
 .mesicni-poznamka-input {
     width: 100%;
     box-sizing: border-box;
     text-align: center;
     font-weight: bold;
-    font-size: 20px; /* Větší písmo */
-    background-color: #e1f5fe; /* Světle modré pozadí */
-    border: 1px solid #0288d1; /* Tmavší modrý rámeček */
+    font-size: 20px;
+    background-color: #e1f5fe;
+    border: 1px solid #0288d1;
     color: #01579b;
     padding: 10px;
-    margin-top: 5px; /* Malá mezera nad poznámkou */
-    margin-bottom: 15px; /* Větší mezera pod poznámkou */
+    margin-top: 5px;
+    margin-bottom: 15px;
 }
 
 .soucet-bunka {
@@ -89,4 +86,9 @@ button {
 
 #ulozit-data {
     background-color: #2196F3; /* Modrá */
+}
+
+/* === ZDE JE TEN NOVÝ STYL === */
+#zobrazit-grafy {
+    background-color: #ff9800; /* Oranžová */
 }
