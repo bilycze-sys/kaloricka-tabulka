@@ -1,14 +1,67 @@
 [
   {
+    "tyden": 1,
     "kalorie": [2010, 2240, 1410, 2580, 2560, 2030, 1590],
     "pocit": "Dobrý",
-    "vazeni": "nevážení\n125,6 vah\n31,3 tuk",
-    "tydenniPoznamka": ""
+    "vazeni": {
+      "stav": "nevážení",
+      "vaha_kg": 125.6,
+      "tuk_procenta": 31.3
+    },
+    "tydenni_poznamka": ""
   },
   {
-    "kalorie": [1938, 1936, 2500, 2200, 1675, 2150, 0],
+    "tyden": 2,
+    "kalorie": [1500, 1690, 1405, 1650, 1660, 2656, 1900],
+    "pocit": "Začátek běhu a méně energie",
+    "vazeni": {
+      "stav": "nevážení",
+      "vaha_kg": 123.5,
+      "tuk_procenta": 31.8,
+      "obvod_cm": 123.3
+    },
+    "tydenni_poznamka": ""
+  },
+  {
+    "tyden": 3,
+    "kalorie": [1670, 2564, 1400, 1900, 2100, 1900, 1826],
     "pocit": "hodně málo energie",
-    "vazeni": "124,0 vah\n30,6 tuk",
-    "tydenniPoznamka": "nemůžu se hejbat"
+    "vazeni": {
+      "stav": "váženo",
+      "vaha_kg": 124.0,
+      "tuk_procenta": 30.6,
+      "obvod_cm": 123.5
+    },
+    "tydenni_poznamka": "okej chci asi méně kalorií, chodím dost, dám 1850 kcal"
+  },
+  {
+    "tyden": 4,
+    "kalorie": [1938, 1936, 2500, 2200, 1675, 2150, null],
+    "pocit": null,
+    "vazeni": null,
+    "tydenni_poznamka": ""
+  },
+  {
+    "tyden": 5,
+    "kalorie": [2412, 1385, 2329, 1300, 1200, 1200, 1980],
+    "pocit": "hubnu ale ne na váze",
+    "vazeni": null,
+    "tydenni_poznamka": ""
+  },
+  {
+    "tyden": 6,
+    "kalorie": [1752, 1653, 2000, 2024, 2165, 2260, 2288],
+    "pocit": null,
+    "vazeni": null,
+    "tydenni_poznamka": "nechci se vážit"
+  },
+  {
+    "tyden": 7,
+    "kalorie": [1900, 3220, 1900, 1686, 2049],
+    "pocit": "váha je nahoře ale hubnu",
+    "vazeni": {
+      "vaha_kg": 122.0
+    },
+    "tydenni_poznamka": "nemocnice"
   }
 ]
