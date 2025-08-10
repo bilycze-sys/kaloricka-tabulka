@@ -88,7 +88,19 @@ button {
     background-color: #2196F3; /* Modrá */
 }
 
-/* === ZDE JE TEN NOVÝ STYL === */
 #zobrazit-grafy {
     background-color: #ff9800; /* Oranžová */
+}
+
+/* Styly pro stránku s grafy */
+#zpet-na-kalorie {
+    background-color: #757575; /* Šedá */
+}
+
+#ulozit-grafy {
+    background-color: #2196F3; /* Modrá */
+}
+
+#pridat-zaznam {
+    background-color: #4CAF50; /* Zelená */
 }
