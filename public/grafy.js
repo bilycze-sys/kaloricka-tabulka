@@ -11,11 +11,17 @@ document.addEventListener('DOMContentLoaded', () => {
         jazyk: { id: 'graf-jazyk', ovladaceId: 'ovladace-jazyk', labels: ['Slovní zásoba', 'Komunikace', 'Časování', 'Předložky'] }
     };
 
+    // === ZDE JE TA KLÍČOVÁ ZMĚNA ===
     const vykresliVse = () => {
         if (vsechnaData.length === 0) return;
 
+        // Seřadíme data podle data, abychom mohli spolehlivě najít předchozí
+        vsechnaData.sort((a, b) => new Date(a.datum) - new Date(b.datum));
+        
         const aktualniZaznam = vsechnaData[aktualniIndex];
-        const predchoziZaznam = aktualniIndex > 0 ? vsechnaData[aktualniIndex - 1] : null;
+        
+        // Najdeme nejbližší předchozí záznam podle data
+        const predchoziZaznam = vsechnaData.slice(0, aktualniIndex).pop();
 
         for (const [nazev, definice] of Object.entries(definiceGrafu)) {
             const aktualniHodnoty = Object.values(aktualniZaznam[nazev]);
@@ -58,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const naplnDropdown = () => {
         const vybranaHodnota = vyberMesiceEl.value;
         vyberMesiceEl.innerHTML = '';
-        vsechnaData.sort((a, b) => new Date(b.datum) - new Date(a.datum));
+        vsechnaData.sort((a, b) => new Date(b.datum) - new Date(a.datum)); // Řadíme od nejnovějšího pro zobrazení
         vsechnaData.forEach((zaznam, index) => {
             const option = document.createElement('option');
             option.value = index;
@@ -87,9 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const response = await fetch('/api/grafy-data');
             vsechnaData = await response.json();
-            if (vsechnaData.length === 0) {
-                // Pokud nemáme data, nic nedělej, čekej na akci uživatele
-            } else {
+            if (vsechnaData.length > 0) {
                 aktualniIndex = 0;
                 naplnDropdown();
                 vykresliVse();
@@ -97,7 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) { console.error("Chyba při načítání dat:", error); }
     };
     
-    // === NOVÁ, VYLEPŠENÁ FUNKCE PRO PŘIDÁNÍ ZÁZNAMU ===
     function pridejNovyZaznam() {
         const zvoleneDatum = vyberDatumEl.value;
         if (!zvoleneDatum) {
@@ -113,20 +116,20 @@ document.addEventListener('DOMContentLoaded', () => {
         ulozVsechnaData(vsechnaData, `Nový záznam pro datum ${zvoleneDatum} byl přidán.`);
     }
 
-    // === NOVÁ, VYLEPŠENÁ FUNKCE PRO ULOŽENÍ ZMĚN ===
     function ulozAktualniZaznam() {
         if(vsechnaData.length === 0) return alert("Není co ukládat. Přidejte první záznam.");
         
-        for (const [nazev, definice] of Object.entries(definiceGrafu)) {
-            for (const label of Object.keys(vsechnaData[aktualniIndex][nazev])) {
+        const vybranyZaznam = vsechnaData[aktualniIndex];
+        
+        for (const [nazev] of Object.entries(definiceGrafu)) {
+            for (const label of Object.keys(vybranyZaznam[nazev])) {
                 const inputEl = document.getElementById(`${nazev}-${label}`);
-                vsechnaData[aktualniIndex][nazev][label] = Number(inputEl.value);
+                vybranyZaznam[nazev][label] = Number(inputEl.value);
             }
         }
-        ulozVsechnaData(vsechnaData, `Změny pro záznam ${vsechnaData[aktualniIndex].datum} byly uloženy.`);
+        ulozVsechnaData(vsechnaData, `Změny pro záznam ${vybranyZaznam.datum} byly uloženy.`);
     }
 
-    // === ÚPLNĚ NOVÁ FUNKCE PRO MAZÁNÍ ===
     function vymazAktualniZaznam() {
         if(vsechnaData.length === 0) return alert("Není co mazat.");
 
@@ -141,6 +144,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     vyberMesiceEl.addEventListener('change', (e) => {
         aktualniIndex = Number(e.target.value);
+        // Po změně v dropdownu musíme data znovu seřadit podle data pro správné porovnání
+        vsechnaData.sort((a, b) => new Date(a.datum) - new Date(b.datum));
+        // Najdeme skutečný index vybraného záznamu v nově seřazeném poli
+        const vybranyDatum = e.target.options[e.target.selectedIndex].text;
+        aktualniIndex = vsechnaData.findIndex(z => z.datum === vybranyDatum);
+        
         vykresliVse();
     });
 
