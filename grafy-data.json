@@ -1,0 +1,23 @@
+[
+  {
+    "datum": "2025-08-10",
+    "telo": {
+      "vaha": 1,
+      "miry": 1,
+      "bodyFat": 1,
+      "sila": 1
+    },
+    "prace": {
+      "prijem": 1,
+      "casovaNarocnost": 1,
+      "remote": 1,
+      "zabavnost": 1
+    },
+    "jazyk": {
+      "slovniZasoba": 1,
+      "komunikace": 1,
+      "casovani": 1,
+      "predlozky": 1
+    }
+  }
+]

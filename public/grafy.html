@@ -10,8 +10,8 @@
         .main-container { max-width: 1200px; margin: auto; padding: 20px; }
         .graf-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 40px; }
         .graf-kontejner { padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .ovladani-panel { text-align: center; margin: 20px 0; padding: 15px; background: #fff; border-radius: 8px; }
-        .ovladani-panel select, .ovladani-panel button { font-size: 16px; padding: 10px; margin: 0 5px; }
+        .ovladani-panel { text-align: center; margin: 20px 0; padding: 15px; background: #fff; border-radius: 8px; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; }
+        .ovladani-panel label, .ovladani-panel select, .ovladani-panel button, .ovladani-panel input { font-size: 16px; padding: 10px; margin: 5px; }
         .ovladaci-prvky { margin-top: 20px; display: grid; grid-template-columns: 1fr; gap: 10px; }
         .ovladaci-prvek { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid #eee; }
         .ovladaci-prvek label { font-weight: bold; color: #555; }
@@ -24,9 +24,14 @@
 
         <div class="ovladani-panel">
             <a href="index.html"><button id="zpet-na-kalorie">Zpět na Kalorie</button></a>
-            <label for="vyber-mesice">Vyber záznam:</label>
+            <label for="vyber-mesice">Záznam:</label>
             <select id="vyber-mesice"></select>
-            <button id="pridat-zaznam">Přidat Nový Záznam</button>
+            
+            <!-- === ZDE JE NOVÉ POLÍČKO PRO DATUM === -->
+            <label for="vyber-datum">Datum:</label>
+            <input type="date" id="vyber-datum">
+
+            <button id="pridat-zaznam">Přidat Nový</button>
             <button id="ulozit-grafy">Uložit Změny</button>
         </div>
 

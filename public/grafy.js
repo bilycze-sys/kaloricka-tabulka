@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let vsechnaData = [];
     let aktualniIndex = 0;
     const vyberMesiceEl = document.getElementById('vyber-mesice');
+    const vyberDatumEl = document.getElementById('vyber-datum'); // Nový element pro datum
 
     const definiceGrafu = {
         telo: { id: 'graf-telo', ovladaceId: 'ovladace-telo', labels: ['Váha', 'Míry', 'Body Fat %', 'Síla'] },
@@ -15,6 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const aktualniZaznam = vsechnaData[aktualniIndex];
         const predchoziZaznam = aktualniIndex > 0 ? vsechnaData[aktualniIndex - 1] : null;
+
+        // === ZMĚNA: Naplnění políčka s datem ===
+        vyberDatumEl.value = aktualniZaznam.datum;
 
         for (const [nazev, definice] of Object.entries(definiceGrafu)) {
             const aktualniHodnoty = Object.values(aktualniZaznam[nazev]);
@@ -64,12 +68,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const naplnDropdown = () => {
         vyberMesiceEl.innerHTML = '';
+        // Seřadíme data od nejnovějšího po nejstarší pro lepší přehlednost v menu
+        vsechnaData.sort((a, b) => new Date(b.datum) - new Date(a.datum));
         vsechnaData.forEach((zaznam, index) => {
             const option = document.createElement('option');
             option.value = index;
             option.textContent = zaznam.datum;
             vyberMesiceEl.appendChild(option);
         });
+        // Po seřazení bude nejnovější vždy na indexu 0
         vyberMesiceEl.value = aktualniIndex;
     };
     
@@ -80,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (vsechnaData.length === 0) {
                 pridejNovyZaznam(true);
             } else {
-                aktualniIndex = vsechnaData.length - 1;
+                aktualniIndex = 0; // Začneme na nejnovějším záznamu
                 naplnDropdown();
                 vykresliVse();
             }
@@ -90,6 +97,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const ulozData = async () => {
+        // === ZMĚNA: Načteme i hodnotu z políčka pro datum ===
+        vsechnaData[aktualniIndex].datum = vyberDatumEl.value;
+
         for (const [nazev, definice] of Object.entries(definiceGrafu)) {
             for (const label of Object.keys(vsechnaData[aktualniIndex][nazev])) {
                 const inputEl = document.getElementById(`${nazev}-${label}`);
@@ -103,6 +113,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify(vsechnaData)
             });
             alert('Data uložena!');
+            // Znovu naplníme dropdown, aby se aktualizovalo datum, pokud bylo změněno
+            naplnDropdown();
             vykresliVse();
         } catch (error) {
             console.error("Chyba při ukládání:", error);
@@ -111,13 +123,17 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function pridejNovyZaznam(jenVytvorit = false) {
-        const posledniZaznam = vsechnaData.length > 0 ? vsechnaData[vsechnaData.length - 1] : JSON.parse(JSON.stringify(definiceGrafu));
+        const posledniZaznam = vsechnaData.length > 0 ? vsechnaData[0] : JSON.parse(JSON.stringify(definiceGrafu));
         const novyZaznam = JSON.parse(JSON.stringify(posledniZaznam));
         novyZaznam.datum = new Date().toISOString().split('T')[0];
+        
         vsechnaData.push(novyZaznam);
-        aktualniIndex = vsechnaData.length - 1;
-        naplnDropdown();
+        aktualniIndex = vsechnaData.length - 1; // Nový záznam je dočasně poslední
+        naplnDropdown(); // Seřadí data a nastaví index na 0 (nový záznam)
+        aktualniIndex = 0; // Ujistíme se, že jsme na novém záznamu
+        vyberMesiceEl.value = aktualniIndex;
         vykresliVse();
+        
         if (!jenVytvorit) ulozData();
     }
 
