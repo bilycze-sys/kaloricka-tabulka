@@ -3,23 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moje Kalorická Tabulka</title>
-    <!-- Připojíme soubor se styly -->
+    <title>Kalorická Tabulka</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h1>Moje Kalorická Tabulka</h1>
+    <h1>Kalorická Tabulka</h1>
 
-    <!-- Sem JavaScript automaticky vygeneruje naši tabulku -->
-    <div id="tabulka-kontejner"></div>
+    <table id="kaloricka-tabulka">
+        <thead>
+            <!-- TOTO JE HLAVIČKA TABULKY -->
+            <tr>
+                <th>Pondělí</th>
+                <th>Úterý</th>
+                <th>Středa</th>
+                <th>Čtvrtek</th>
+                <th>Pátek</th>
+                <th>Sobota</th>
+                <th>Neděle</th>
+                <th>Pocit</th>
+                <th>Vážení</th>
+                <th>Týdenní Kcal</th>
+            </tr>
+        </thead>
+        <tbody id="kaloricka-tabulka-body">
+            <!-- Sem bude JavaScript generovat řádky -->
+        </tbody>
+    </table>
 
-    <div class="tlacitka">
-        <button id="ulozit-btn">Uložit změny</button>
-        <p id="status-zprava"></p>
-    </div>
+    <button id="pridat-radek">Přidat týden</button>
+    <button id="ulozit-data">Uložit data</button>
 
-    <!-- Připojíme soubor s JavaScriptem (musí být na konci <body>) -->
     <script src="script.js"></script>
 </body>
 </html>
