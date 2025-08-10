@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tabulkaBody = document.getElementById('kaloricka-tabulka-body');
     const pridatRadekBtn = document.getElementById('pridat-radek');
     const ulozitDataBtn = document.getElementById('ulozit-data');
-    let pocetTydnu = 0; // Nová proměnná pro sledování počtu týdnů
+    let pocetTydnu = 0; // Proměnná pro sledování počtu týdnů
 
     const aktualizujSoucet = (radek) => {
         const inputyKalorii = radek.querySelectorAll('input[type="number"]');
@@ -13,11 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
         radek.lastElementChild.textContent = soucet;
     };
 
-    // Upravená funkce pro vytvoření řádku
     const vytvorRadek = (dataTydne = {}) => {
         const tr = document.createElement('tr');
         tr.classList.add('tyden-radek');
 
+        // Vytvoření 7 polí pro kalorie
         for (let i = 0; i < 7; i++) {
             const td = document.createElement('td');
             const input = document.createElement('input');
@@ -28,13 +28,16 @@ document.addEventListener('DOMContentLoaded', () => {
             tr.appendChild(td);
         }
 
+        // === ZDE JE POSLEDNÍ ÚPRAVA ===
+        // Buňka pro "Pocit" jako víceřádkové pole
         const tdPocit = document.createElement('td');
-        const inputPocit = document.createElement('input');
-        inputPocit.type = 'text';
-        inputPocit.value = dataTydne.pocit || '';
-        tdPocit.appendChild(inputPocit);
+        const textareaPocit = document.createElement('textarea'); // Změněno z input
+        textareaPocit.rows = 3; // Stejná výška jako "Vážení"
+        textareaPocit.value = dataTydne.pocit || '';
+        tdPocit.appendChild(textareaPocit);
         tr.appendChild(tdPocit);
 
+        // Buňka pro "Vážení"
         const tdVazeni = document.createElement('td');
         const textareaVazeni = document.createElement('textarea');
         textareaVazeni.rows = 3;
@@ -42,15 +45,15 @@ document.addEventListener('DOMContentLoaded', () => {
         tdVazeni.appendChild(textareaVazeni);
         tr.appendChild(tdVazeni);
         
+        // Buňka pro součet
         const tdSoucet = document.createElement('td');
         tdSoucet.className = 'soucet-bunka';
         tr.appendChild(tdSoucet);
 
         tabulkaBody.appendChild(tr);
-        pocetTydnu++; // Po přidání každého týdne zvýšíme počítadlo
+        pocetTydnu++; // Zvýšení počítadla týdnů
 
-        // === ZDE JE TA HLAVNÍ ZMĚNA ===
-        // Pokud je aktuální počet týdnů dělitelný 4, přidej měsíční poznámku
+        // Přidání měsíční poznámky po každém 4. týdnu
         if (pocetTydnu % 4 === 0) {
             const trPoznamka = document.createElement('tr');
             const tdPoznamka = document.createElement('td');
@@ -59,9 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const inputPoznamka = document.createElement('input');
             inputPoznamka.type = 'text';
             inputPoznamka.placeholder = 'Měsíční poznámka...';
-            // Pokud máme data, použijeme je
             inputPoznamka.value = dataTydne.mesicniPoznamka || '';
-            inputPoznamka.className = 'mesicni-poznamka-input'; // Dáme jí novou třídu
+            inputPoznamka.className = 'mesicni-poznamka-input';
             tdPoznamka.appendChild(inputPoznamka);
             trPoznamka.appendChild(tdPoznamka);
             tabulkaBody.appendChild(trPoznamka);
@@ -75,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch('/api/data');
             const data = await response.json();
             tabulkaBody.innerHTML = '';
-            pocetTydnu = 0; // Resetujeme počítadlo
+            pocetTydnu = 0; 
             
             if (data.length > 0) {
                 data.forEach(tyden => vytvorRadek(tyden));
@@ -94,19 +96,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         radky.forEach((radek, index) => {
             const dataTydne = { kalorie: [] };
-            const inputy = radek.querySelectorAll('input, textarea');
+            const inputy = radek.querySelectorAll('input[type="number"], textarea');
 
             for (let i = 0; i < 7; i++) {
                 dataTydne.kalorie.push(parseInt(inputy[i].value) || 0);
             }
             
+            // Indexy se posunuly, protože teď máme dvě `textarea`
             dataTydne.pocit = inputy[7].value.trim();
             dataTydne.vazeni = inputy[8].value.trim();
 
-            // Pokud je to čtvrtý řádek, najdi poznámku a ulož ji
             if ((index + 1) % 4 === 0) {
                 const poznamkaRadek = radek.nextElementSibling;
-                // Zkontrolujeme, jestli další řádek vůbec existuje a jestli je to poznámka
                 if (poznamkaRadek && poznamkaRadek.querySelector('.mesicni-poznamka-input')) {
                     const poznamkaInput = poznamkaRadek.querySelector('.mesicni-poznamka-input');
                     dataTydne.mesicniPoznamka = poznamkaInput.value.trim();
