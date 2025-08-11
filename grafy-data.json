@@ -1,6 +1,48 @@
 [
   {
-    "datum": "2025-08-10",
+    "datum": "2025-04-01",
+    "telo": {
+      "vaha": 1,
+      "miry": 1,
+      "bodyFat": 1,
+      "sila": 1
+    },
+    "prace": {
+      "prijem": 3,
+      "casovaNarocnost": 4,
+      "remote": 5,
+      "zabavnost": 3
+    },
+    "jazyk": {
+      "slovniZasoba": 1,
+      "komunikace": 1,
+      "casovani": 1,
+      "predlozky": 1
+    }
+  },
+  {
+    "datum": "2025-05-01",
+    "telo": {
+      "vaha": 1,
+      "miry": 1,
+      "bodyFat": 1,
+      "sila": 1
+    },
+    "prace": {
+      "prijem": 3,
+      "casovaNarocnost": 4,
+      "remote": 5,
+      "zabavnost": 3
+    },
+    "jazyk": {
+      "slovniZasoba": 1,
+      "komunikace": 1,
+      "casovani": 1,
+      "predlozky": 1
+    }
+  },
+  {
+    "datum": "2025-06-01",
     "telo": {
       "vaha": 1,
       "miry": 1,
@@ -12,6 +54,27 @@
       "casovaNarocnost": 1,
       "remote": 1,
       "zabavnost": 1
+    },
+    "jazyk": {
+      "slovniZasoba": 1,
+      "komunikace": 1,
+      "casovani": 1,
+      "predlozky": 1
+    }
+  },
+  {
+    "datum": "2025-08-01",
+    "telo": {
+      "vaha": 1,
+      "miry": 1,
+      "bodyFat": 1,
+      "sila": 1
+    },
+    "prace": {
+      "prijem": 3.2,
+      "casovaNarocnost": 5,
+      "remote": 5,
+      "zabavnost": 6
     },
     "jazyk": {
       "slovniZasoba": 1,
