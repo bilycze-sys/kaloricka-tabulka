@@ -9,52 +9,42 @@ document.addEventListener('DOMContentLoaded', () => {
         jazyk: { id: 'graf-jazyk', ovladaceId: 'ovladace-jazyk', labels: ['Slovní zásoba', 'Komunikace', 'Časování', 'Předložky'] }
     };
 
-    // === ZDE JE TA KLÍČOVÁ ZMĚNA V LOGICE BAREV ===
-    const generujBarvu = (index, total) => {
-        // progress 0 = nejstarší, progress 1 = nejnovější
-        const progress = total > 1 ? index / (total - 1) : 1;
-        
-        // Chceme, aby nejstarší (progress=0) byl nejvýraznější.
-        // Proto vytvoříme opačnou proměnnou (prominence), která půjde od 1 k 0.
-        const prominence = 1 - progress;
-
-        const startHue = 210; // Modrá
-        const saturation = 30 + (60 * prominence); // Nejvíc syté pro nejstarší
-        const lightness = 85 - (35 * prominence);  // Nejméně světlé (tmavší) pro nejstarší
-        const alphaFill = 0.1 + (0.2 * prominence);   // Nejvíc viditelná výplň pro nejstarší
-        const alphaBorder = 0.3 + (0.7 * prominence); // Nejvíc viditelný okraj pro nejstarší
-
-        return {
-            vypln: `hsla(${startHue}, ${saturation}%, ${lightness}%, ${alphaFill})`,
-            okraj: `hsla(${startHue}, ${saturation}%, ${lightness}%, ${alphaBorder})`
-        };
-    };
-
+    // === ZDE JE TA KLÍČOVÁ ZMĚNA VE VYKRESLOVÁNÍ ===
     const vykresliVse = () => {
         if (vsechnaData.length === 0) return;
         vsechnaData.sort((a, b) => new Date(a.datum) - new Date(b.datum));
+        
         const dataKVykresleni = vsechnaData.slice(-12);
+        const nejnovejsiZaznam = dataKVykresleni[dataKVykresleni.length - 1];
 
         for (const [nazev, definice] of Object.entries(definiceGrafu)) {
-            const datasets = dataKVykresleni.map((zaznam, index) => {
-                const { vypln, okraj } = generujBarvu(index, dataKVykresleni.length);
+            // Vytvoříme datové sady: všechny historické budou šedé, nejnovější modrý
+            const datasets = dataKVykresleni.map(zaznam => {
+                const jeNejnovejsi = (zaznam.datum === nejnovejsiZaznam.datum);
                 return {
-                    label: zaznam.datum, data: Object.values(zaznam[nazev]), fill: true,
-                    backgroundColor: vypln, borderColor: okraj, pointRadius: 2
+                    label: zaznam.datum,
+                    data: Object.values(zaznam[nazev]),
+                    fill: jeNejnovejsi, // Vyplníme jen nejnovější
+                    backgroundColor: 'rgba(54, 162, 235, 0.3)', // Modrá výplň
+                    borderColor: jeNejnovejsi ? 'rgb(54, 162, 235)' : 'rgba(200, 200, 200, 0.7)', // Modrý okraj pro nejnovější, šedý pro ostatní
+                    borderWidth: jeNejnovejsi ? 2.5 : 1, // Tlustší čára pro nejnovější
+                    pointRadius: jeNejnovejsi ? 3 : 0, // Body jen u nejnovějšího
                 };
             });
 
             if (chartInstances[nazev]) chartInstances[nazev].destroy();
             const ctx = document.getElementById(definice.id).getContext('2d');
             chartInstances[nazev] = new Chart(ctx, {
-                type: 'radar', data: { labels: definice.labels, datasets },
+                type: 'radar', 
+                data: { labels: definice.labels, datasets },
                 options: { 
                     scales: { r: { min: 0, max: 10, ticks: { stepSize: 1 } } },
                     plugins: { legend: { display: false } }
                 }
             });
         }
-        const nejnovejsiZaznam = vsechnaData[vsechnaData.length - 1];
+        
+        // Ovládací prvky vždy ukazují hodnoty nejnovějšího záznamu
         for (const nazev in definiceGrafu) {
             vyplnOvladace(nazev, nejnovejsiZaznam[nazev]);
         }
