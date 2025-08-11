@@ -14,7 +14,7 @@
       "zabavnost": 3
     },
     "jazyk": {
-      "slovniZasoba": 1,
+      "slovniZasoba": 2,
       "komunikace": 1,
       "casovani": 1,
       "predlozky": 1
@@ -35,10 +35,10 @@
       "zabavnost": 3
     },
     "jazyk": {
-      "slovniZasoba": 1,
-      "komunikace": 1,
-      "casovani": 1,
-      "predlozky": 1
+      "slovniZasoba": 3,
+      "komunikace": 2,
+      "casovani": 2,
+      "predlozky": 2
     }
   },
   {
@@ -56,10 +56,10 @@
       "zabavnost": 1
     },
     "jazyk": {
-      "slovniZasoba": 1,
-      "komunikace": 1,
-      "casovani": 1,
-      "predlozky": 1
+      "slovniZasoba": 4,
+      "komunikace": 3,
+      "casovani": 3,
+      "predlozky": 3
     }
   },
   {
@@ -77,10 +77,10 @@
       "zabavnost": 6
     },
     "jazyk": {
-      "slovniZasoba": 1,
-      "komunikace": 1,
-      "casovani": 1,
-      "predlozky": 1
+      "slovniZasoba": 5,
+      "komunikace": 4,
+      "casovani": 4,
+      "predlozky": 4
     }
   }
 ]

@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
         jazyk: { id: 'graf-jazyk', ovladaceId: 'ovladace-jazyk', labels: ['Slovní zásoba', 'Komunikace', 'Časování', 'Předložky'] }
     };
 
-    // === ZDE JE TA KLÍČOVÁ ZMĚNA VE VYKRESLOVÁNÍ ===
     const vykresliVse = () => {
         if (vsechnaData.length === 0) return;
         vsechnaData.sort((a, b) => new Date(a.datum) - new Date(b.datum));
@@ -18,17 +17,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const nejnovejsiZaznam = dataKVykresleni[dataKVykresleni.length - 1];
 
         for (const [nazev, definice] of Object.entries(definiceGrafu)) {
-            // Vytvoříme datové sady: všechny historické budou šedé, nejnovější modrý
             const datasets = dataKVykresleni.map(zaznam => {
                 const jeNejnovejsi = (zaznam.datum === nejnovejsiZaznam.datum);
                 return {
                     label: zaznam.datum,
                     data: Object.values(zaznam[nazev]),
-                    fill: jeNejnovejsi, // Vyplníme jen nejnovější
-                    backgroundColor: 'rgba(54, 162, 235, 0.3)', // Modrá výplň
-                    borderColor: jeNejnovejsi ? 'rgb(54, 162, 235)' : 'rgba(200, 200, 200, 0.7)', // Modrý okraj pro nejnovější, šedý pro ostatní
-                    borderWidth: jeNejnovejsi ? 2.5 : 1, // Tlustší čára pro nejnovější
-                    pointRadius: jeNejnovejsi ? 3 : 0, // Body jen u nejnovějšího
+                    fill: jeNejnovejsi,
+                    backgroundColor: 'rgba(54, 162, 235, 0.3)',
+                    // === ZDE JE TA KLÍČOVÁ ZMĚNA BARVY ===
+                    borderColor: jeNejnovejsi ? 'rgb(54, 162, 235)' : 'rgba(0, 0, 0, 0.25)', // Šedou jsme změnili na průhlednou černou
+                    borderWidth: jeNejnovejsi ? 2.5 : 1.5, // Mírně jsem ztlustil i historické čáry pro lepší viditelnost
+                    pointRadius: jeNejnovejsi ? 3 : 0,
                 };
             });
 
@@ -44,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         
-        // Ovládací prvky vždy ukazují hodnoty nejnovějšího záznamu
         for (const nazev in definiceGrafu) {
             vyplnOvladace(nazev, nejnovejsiZaznam[nazev]);
         }
