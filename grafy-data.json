@@ -2,10 +2,10 @@
   {
     "datum": "2025-04-01",
     "telo": {
-      "vaha": 1,
+      "vaha": 2,
       "miry": 1,
       "bodyFat": 1,
-      "sila": 1
+      "sila": 4
     },
     "prace": {
       "prijem": 3,
@@ -23,10 +23,10 @@
   {
     "datum": "2025-05-01",
     "telo": {
-      "vaha": 1,
-      "miry": 1,
-      "bodyFat": 1,
-      "sila": 1
+      "vaha": 4,
+      "miry": 4,
+      "bodyFat": 3,
+      "sila": 4.3
     },
     "prace": {
       "prijem": 3,
@@ -44,10 +44,10 @@
   {
     "datum": "2025-06-01",
     "telo": {
-      "vaha": 1,
-      "miry": 1,
-      "bodyFat": 1,
-      "sila": 1
+      "vaha": 5,
+      "miry": 4,
+      "bodyFat": 3,
+      "sila": 6
     },
     "prace": {
       "prijem": 1,
@@ -65,10 +65,10 @@
   {
     "datum": "2025-08-01",
     "telo": {
-      "vaha": 1,
-      "miry": 1,
-      "bodyFat": 1,
-      "sila": 1
+      "vaha": 5,
+      "miry": 4,
+      "bodyFat": 3,
+      "sila": 4.3
     },
     "prace": {
       "prijem": 3.2,

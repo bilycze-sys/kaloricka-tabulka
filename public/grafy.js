@@ -9,11 +9,25 @@ document.addEventListener('DOMContentLoaded', () => {
         jazyk: { id: 'graf-jazyk', ovladaceId: 'ovladace-jazyk', labels: ['Slovní zásoba', 'Komunikace', 'Časování', 'Předložky'] }
     };
 
+    // === ZDE JE TA KLÍČOVÁ ZMĚNA V LOGICE BAREV ===
     const generujBarvu = (index, total) => {
+        // progress 0 = nejstarší, progress 1 = nejnovější
         const progress = total > 1 ? index / (total - 1) : 1;
-        const startHue = 210; const saturation = 30 + (60 * progress); const lightness = 85 - (35 * progress);
-        const alphaFill = 0.1 + (0.2 * progress); const alphaBorder = 0.3 + (0.7 * progress);
-        return { vypln: `hsla(${startHue}, ${saturation}%, ${lightness}%, ${alphaFill})`, okraj: `hsla(${startHue}, ${saturation}%, ${lightness}%, ${alphaBorder})` };
+        
+        // Chceme, aby nejstarší (progress=0) byl nejvýraznější.
+        // Proto vytvoříme opačnou proměnnou (prominence), která půjde od 1 k 0.
+        const prominence = 1 - progress;
+
+        const startHue = 210; // Modrá
+        const saturation = 30 + (60 * prominence); // Nejvíc syté pro nejstarší
+        const lightness = 85 - (35 * prominence);  // Nejméně světlé (tmavší) pro nejstarší
+        const alphaFill = 0.1 + (0.2 * prominence);   // Nejvíc viditelná výplň pro nejstarší
+        const alphaBorder = 0.3 + (0.7 * prominence); // Nejvíc viditelný okraj pro nejstarší
+
+        return {
+            vypln: `hsla(${startHue}, ${saturation}%, ${lightness}%, ${alphaFill})`,
+            okraj: `hsla(${startHue}, ${saturation}%, ${lightness}%, ${alphaBorder})`
+        };
     };
 
     const vykresliVse = () => {
@@ -34,7 +48,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const ctx = document.getElementById(definice.id).getContext('2d');
             chartInstances[nazev] = new Chart(ctx, {
                 type: 'radar', data: { labels: definice.labels, datasets },
-                options: { scales: { r: { min: 0, max: 10, ticks: { stepSize: 1 } } }, plugins: { legend: { display: false } } }
+                options: { 
+                    scales: { r: { min: 0, max: 10, ticks: { stepSize: 1 } } },
+                    plugins: { legend: { display: false } }
+                }
             });
         }
         const nejnovejsiZaznam = vsechnaData[vsechnaData.length - 1];
@@ -68,16 +85,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch('/api/grafy-data');
             vsechnaData = await response.json();
             
-            // === ZDE INICIALIZUJEME NOVÝ KALENDÁŘ ===
             const existujiciDatumy = vsechnaData.map(zaznam => zaznam.datum);
             flatpickr(vyberDatumEl, {
-                dateFormat: "Y-m-d", // Formát data
-                defaultDate: "today", // Výchozí datum je dnešek
+                dateFormat: "Y-m-d",
+                defaultDate: "today",
                 onDayCreate: function(dObj, dStr, fp, dayElem) {
-                    // Pro každý den v kalendáři zkontrolujeme, zda existuje v našich datech
                     const datum = dayElem.dateObj.toISOString().split('T')[0];
                     if (existujiciDatumy.includes(datum)) {
-                        dayElem.classList.add("zaznam-existuje"); // Přidáme mu třídu pro zvýraznění
+                        dayElem.classList.add("zaznam-existuje");
                     }
                 }
             });
