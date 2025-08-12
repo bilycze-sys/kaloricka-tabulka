@@ -9,6 +9,10 @@ h1 {
     color: #333;
 }
 
+.tabulka-kontejner {
+    overflow-x: auto;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -80,33 +84,16 @@ button {
     color: white;
 }
 
-#pridat-radek {
-    background-color: #4CAF50; /* Zelená */
+#pridat-mesic {
+    background-color: #4CAF50;
 }
 
 #ulozit-data {
-    background-color: #2196F3; /* Modrá */
+    background-color: #2196F3;
 }
 
 #zobrazit-grafy {
-    background-color: #ff9800; /* Oranžová */
-}
-
-/* Styly pro stránku s grafy */
-#zpet-na-kalorie {
-    background-color: #757575; /* Šedá */
-}
-
-#ulozit-grafy {
-    background-color: #2196F3; /* Modrá */
-}
-
-#pridat-zaznam {
-    background-color: #4CAF50; /* Zelená */
-}
-
-#vymazat-zaznam {
-    background-color: #f44336; /* Červená */
+    background-color: #ff9800;
 }
 
 .flatpickr-day.zaznam-existuje {
@@ -116,22 +103,17 @@ button {
     font-weight: bold;
 }
 
-/* === RESPONZIVNÍ DESIGN PRO MOBILNÍ ZAŘÍZENÍ === */
-.tabulka-kontejner {
-    overflow-x: auto; /* Umožní horizontální posouvání, pokud se tabulka nevejde */
+.special-radek-text {
+    padding: 20px !important;
+    font-size: 24px;
+    font-weight: bold;
+    color: #555;
+    background-color: #f0f0f0;
+    text-transform: uppercase;
 }
 
 @media (max-width: 800px) {
-    body {
-        padding: 10px;
-    }
-    
-    button {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
-    a {
-        width: 100%;
-    }
+    body { padding: 10px; }
+    button, a { width: 100%; }
+    button { margin-bottom: 10px; }
 }
