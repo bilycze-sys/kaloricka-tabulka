@@ -49,5 +49,29 @@
  {
     "type": "special",
     "text": ""
+  }, 
+  {
+    "kalorie": [0, 0, 0, 0, 0, 0, 0],
+    "pocit": "hubnu ale ne na vaze",
+    "vazeni": ""
+  },
+  {
+    "kalorie": [0, 0, 0, 0, 0, 0, 0],
+    "pocit": "",
+    "vazeni": ""
+  },
+  {
+    "kalorie": [0, 0, 0, 0, 0, 0, 0],
+    "pocit": "váha je nahoře ale hubnu",
+    "vazeni": ""
+  },
+  {
+    "kalorie": [0, 0, 0, 0, 0, 0, 0],
+    "pocit": "váha je nahoře ale hubnu",
+    "vazeni": ""
+  },
+   {
+    "type": "special",
+    "text": "Dostat se z nemocnice"
   }
 ]
