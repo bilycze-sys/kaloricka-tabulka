@@ -21,6 +21,12 @@
     "mesicniPoznamka": ""
   },
   {
+    "type": "special",
+    "text": ""
+  },
+  
+
+  {
     "kalorie": [2412, 1385, 2329, 1300, 1200, 1200, 1980],
     "pocit": "hubnu ale ne na vaze",
     "vazeni": ""
@@ -34,5 +40,9 @@
     "kalorie": [1900, 3220, 1900, 1686, 2049, 0, 0],
     "pocit": "váha je nahoře ale hubnu",
     "vazeni": ""
-  }
+  },
+ {
+    "type": "special",
+    "text": ""
+  },
 ]
