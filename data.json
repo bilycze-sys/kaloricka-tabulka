@@ -37,7 +37,12 @@
     "vazeni": ""
   },
   {
-    "kalorie": [1900, 3220, 1900, 1686, 2049, 0, 0],
+    "kalorie": [1900, 3220, 1900, 1686, 2049, 2400, 1895],
+    "pocit": "váha je nahoře ale hubnu",
+    "vazeni": ""
+  },
+  {
+    "kalorie": [2180, 1850, 1900, 2213, 2049, 0, 0],
     "pocit": "váha je nahoře ale hubnu",
     "vazeni": ""
   },
