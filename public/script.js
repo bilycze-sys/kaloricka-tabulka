@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const tabulkaBody = document.getElementById('kaloricka-tabulka-body');
+    // Změna ID tlačítka
     const pridatMesicBtn = document.getElementById('pridat-mesic');
     const ulozitDataBtn = document.getElementById('ulozit-data');
 
@@ -30,14 +31,12 @@ document.addEventListener('DOMContentLoaded', () => {
         textareaPocit.value = dataTydne.pocit || '';
         tdPocit.appendChild(textareaPocit);
         tr.appendChild(tdPocit);
-
         const tdVazeni = document.createElement('td');
         const textareaVazeni = document.createElement('textarea');
         textareaVazeni.rows = 3;
         textareaVazeni.value = dataTydne.vazeni || '';
         tdVazeni.appendChild(textareaVazeni);
         tr.appendChild(tdVazeni);
-
         const tdSoucet = document.createElement('td');
         tdSoucet.className = 'soucet-bunka';
         tr.appendChild(tdSoucet);
@@ -56,9 +55,13 @@ document.addEventListener('DOMContentLoaded', () => {
         tabulkaBody.appendChild(tr);
     };
 
+    // === TOTO JE KLÍČOVÁ FUNKCE, KTEROU ZNOVU AKTIVUJEME ===
     const pridejCelyMesic = () => {
-        for (let i = 0; i < 4; i++) { vytvorRadek(); }
+        for (let i = 0; i < 4; i++) {
+            vytvorRadek();
+        }
         const trPoznamka = document.createElement('tr');
+        trPoznamka.dataset.type = 'poznamka'; // Dáme jí typ pro ukládání
         const tdPoznamka = document.createElement('td');
         tdPoznamka.colSpan = 10;
         const inputPoznamka = document.createElement('input');
@@ -67,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         inputPoznamka.className = 'mesicni-poznamka-input';
         tdPoznamka.appendChild(inputPoznamka);
         trPoznamka.appendChild(tdPoznamka);
+        tabulkaBody.appendChild(trPoznamka);
     };
 
     const nactiData = async () => {
@@ -79,6 +83,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 data.forEach(zaznam => {
                     if (zaznam.type === 'special') {
                         vytvorSpecialniRadek(zaznam);
+                    } else if (zaznam.type === 'poznamka') {
+                        const trPoznamka = document.createElement('tr');
+                        trPoznamka.dataset.type = 'poznamka';
+                        const tdPoznamka = document.createElement('td');
+                        tdPoznamka.colSpan = 10;
+                        const inputPoznamka = document.createElement('input');
+                        inputPoznamka.type = 'text';
+                        inputPoznamka.placeholder = 'Měsíční cíle / hodnocení...';
+                        inputPoznamka.className = 'mesicni-poznamka-input';
+                        inputPoznamka.value = zaznam.text || '';
+                        tdPoznamka.appendChild(inputPoznamka);
+                        trPoznamka.appendChild(tdPoznamka);
+                        tabulkaBody.appendChild(trPoznamka);
                     } else {
                         vytvorRadek(zaznam);
                     }
@@ -104,6 +121,10 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (radek.dataset.type === 'special') {
                 const dataSpecial = { type: 'special', text: radek.textContent };
                 dataKUlozeni.push(dataSpecial);
+            } else if (radek.dataset.type === 'poznamka') {
+                const poznamkaInput = radek.querySelector('.mesicni-poznamka-input');
+                const dataPoznamka = { type: 'poznamka', text: poznamkaInput.value.trim() };
+                dataKUlozeni.push(dataPoznamka);
             }
         });
 
@@ -113,6 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) { console.error('Chyba při ukládání dat:', error); alert('Nastala chyba při ukládání.'); }
     };
 
+    // Přiřazení správné funkce tlačítku
     pridatMesicBtn.addEventListener('click', pridejCelyMesic);
     ulozitDataBtn.addEventListener('click', ulozData);
 
