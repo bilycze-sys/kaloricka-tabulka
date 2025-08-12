@@ -1,38 +1,38 @@
 [
   {
+    "kalorie": [2010, 2240, 1410, 2580, 2560, 2030, 1590],
+    "pocit": "Dobrý",
+    "vazeni": ""
+  },
+  {
+    "kalorie": [1500, 1690, 1405, 1650, 1660, 2656, 1900],
+    "pocit": "Začátek běhu a méně energie",
+    "vazeni": ""
+  },
+  {
+    "kalorie": [1670, 2564, 1400, 1900, 2100, 1900, 1826],
+    "pocit": "hodně málo energie",
+    "vazeni": ""
+  },
+  {
+    "kalorie": [1938, 1936, 2500, 2200, 1675, 2150, 0],
+    "pocit": "",
+    "vazeni": "",
+    "mesicniPoznamka": ""
+  },
+  {
+    "kalorie": [2412, 1385, 2329, 1300, 1200, 1200, 1980],
+    "pocit": "hubnu ale ne na vaze",
+    "vazeni": ""
+  },
+  {
     "kalorie": [1752, 1653, 2000, 2024, 2165, 2260, 2288],
     "pocit": "",
     "vazeni": ""
   },
   {
-    "kalorie": [1900, 3220, 1900, 1686, 2049, 2000, 2000],
+    "kalorie": [1900, 3220, 1900, 1686, 2049, 0, 0],
     "pocit": "váha je nahoře ale hubnu",
-    "vazeni": ""
-  },
-  {
-    "kalorie": [0, 0, 0, 0, 0, 0, 0],
-    "pocit": "začátek nemoce",
-    "vazeni": "",
-    "mesicniPoznamka": ""
-  },
-  {
-    "type": "special",
-    "text": "nemocnice"
-  },
-  {
-    "kalorie": [0, 0, 0, 0, 0, 0, 0],
-    "pocit": "odchod z nemocnice",
-    "vazeni": "",
-    "mesicniPoznamka": ""
-  },
-  {
-    "kalorie": [0, 0, 0, 0, 0, 0, 0],
-    "pocit": "vyléčení",
-    "vazeni": ""
-  },
-  {
-    "kalorie": [1998, 0, 0, 0, 0, 0, 0],
-    "pocit": "",
     "vazeni": ""
   }
 ]
