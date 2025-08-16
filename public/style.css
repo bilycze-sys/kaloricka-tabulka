@@ -9,10 +9,6 @@ h1 {
     color: #333;
 }
 
-.tabulka-kontejner {
-    overflow-x: auto;
-}
-
 table {
     width: 100%;
     border-collapse: collapse;
@@ -84,16 +80,29 @@ button {
     color: white;
 }
 
+/* Tlačítka na kalorické tabulce */
 #pridat-mesic {
-    background-color: #4CAF50;
+    background-color: #4CAF50; /* Zelená */
 }
-
 #ulozit-data {
-    background-color: #2196F3;
+    background-color: #2196F3; /* Modrá */
+}
+#zobrazit-grafy {
+    background-color: #ff9800; /* Oranžová */
 }
 
-#zobrazit-grafy {
-    background-color: #ff9800;
+/* === STYLY PRO TLAČÍTKA NA STRÁNCE S GRAFY === */
+#zpet-na-kalorie {
+    background-color: #757575; /* Šedá */
+}
+#ulozit-grafy {
+    background-color: #2196F3; /* Modrá */
+}
+#pridat-zaznam {
+    background-color: #4CAF50; /* Zelená */
+}
+#vymazat-zaznam {
+    background-color: #f44336; /* Červená */
 }
 
 .flatpickr-day.zaznam-existuje {
