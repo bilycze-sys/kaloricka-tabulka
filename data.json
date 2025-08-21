@@ -1,8 +1,4 @@
-{
-    "kalorie": [0, 0, 0, 0, 0, 0, 0],
-    "pocit": "",
-    "vazeni": ""
-  };
+[
   {
     "kalorie": [0, 0, 0, 0, 0, 0, 0],
     "pocit": "",
@@ -18,18 +14,14 @@
     "pocit": "",
     "vazeni": ""
   },
-   {
+  {
+    "kalorie": [0, 0, 0, 0, 0, 0, 0],
+    "pocit": "",
+    "vazeni": ""
+  },
+  {
     "type": "special",
-    "text": ""
-  },{
-    "kalorie": [0, 0, 0, 0, 0, 0, 0],
-    "pocit": "",
-    "vazeni": ""
-  };
-  {
-    "kalorie": [0, 0, 0, 0, 0, 0, 0],
-    "pocit": "",
-    "vazeni": ""
+    "text": "Váha 114,8kg Tuk 26,5% Pas 112,5cm 1 shyb s gumou 27,5kg vztlak"
   },
   {
     "kalorie": [0, 0, 0, 0, 0, 0, 0],
@@ -41,18 +33,19 @@
     "pocit": "",
     "vazeni": ""
   },
-   {
+  {
+    "kalorie": [0, 0, 0, 0, 0, 0, 0],
+    "pocit": "",
+    "vazeni": ""
+  },
+  {
+    "kalorie": [0, 0, 0, 0, 0, 0, 0],
+    "pocit": "",
+    "vazeni": ""
+  },
+  {
     "type": "special",
-    "text": ""
-  },{
-    "kalorie": [0, 0, 0, 0, 0, 0, 0],
-    "pocit": "",
-    "vazeni": ""
-  };
-  {
-    "kalorie": [0, 0, 0, 0, 0, 0, 0],
-    "pocit": "",
-    "vazeni": ""
+    "text": "Váha 111,8kg Tuk 24,5% Pas 107,5cm 1 čistý shyb a 2 s gumou 22,5kg vztlak"
   },
   {
     "kalorie": [0, 0, 0, 0, 0, 0, 0],
@@ -64,18 +57,19 @@
     "pocit": "",
     "vazeni": ""
   },
-   {
+  {
+    "kalorie": [0, 0, 0, 0, 0, 0, 0],
+    "pocit": "",
+    "vazeni": ""
+  },
+  {
+    "kalorie": [0, 0, 0, 0, 0, 0, 0],
+    "pocit": "",
+    "vazeni": ""
+  },
+  {
     "type": "special",
-    "text": ""
-  },{
-    "kalorie": [0, 0, 0, 0, 0, 0, 0],
-    "pocit": "",
-    "vazeni": ""
-  };
-  {
-    "kalorie": [0, 0, 0, 0, 0, 0, 0],
-    "pocit": "",
-    "vazeni": ""
+    "text": "Váha 108,8kg Tuk 22% Pas 102,5cm 2 čisté shyby a 3 s gumou 17,5kg vztlak"
   },
   {
     "kalorie": [0, 0, 0, 0, 0, 0, 0],
@@ -87,7 +81,18 @@
     "pocit": "",
     "vazeni": ""
   },
-   {
+  {
+    "kalorie": [0, 0, 0, 0, 0, 0, 0],
+    "pocit": "",
+    "vazeni": ""
+  },
+  {
+    "kalorie": [0, 0, 0, 0, 0, 0, 0],
+    "pocit": "",
+    "vazeni": ""
+  },
+  {
     "type": "special",
-    "text": ""
-  },
+    "text": "Váha 105,8kg Tuk 18% Pas 97cm 3–4 čisté shyby a 6 s gumou 12,5kg vztlak"
+  }
+]
